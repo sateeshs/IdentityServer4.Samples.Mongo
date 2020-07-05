@@ -52,10 +52,19 @@ namespace MvcClient
                 app.UseExceptionHandler("/Home/Error");
             }
 
-            app.UseAuthentication();
-
+            app.UseHttpsRedirection();
             app.UseStaticFiles();
-            app.UseMvcWithDefaultRoute();
+            app.UseCookiePolicy();
+
+            app.UseRouting();
+
+            app.UseAuthorization();
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllerRoute(
+                    name: "default",
+                    pattern: "{controller=Home}/{action=Index}/{id?}");
+            });
         }
     }
 }
